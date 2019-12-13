@@ -50,8 +50,40 @@ class ClientTest {
 
   public void startUploadFiles() {
     while (!filesName.isEmpty()) {
+      serverMessenger.writeMessage(MessengerConstant.START_UPLOAD_FILE);
       UploadFile((String) filesName.get(filesName.size() - 1));
-      filesName.remove(filesName.size()-1);
+      filesName.remove(filesName.size() - 1);
+    }
+  }
+
+  private void pro() {
+    String repo = "";
+    serverMessenger.writeMessage(MessengerConstant.START_UPLOAD_FILE);
+
+    repo = serverMessenger.readMessage();
+    this.requestFileNameHandler();
+
+    repo = serverMessenger.readMessage();
+    if (repo.equals(MessengerConstant.FILE_EXIST_ON_SERVER)) {
+      filesName.remove(filesName.size() - 1);
+      if (filesName.isEmpty()) {
+        this.requestNormalCloseHandler();
+        serverMessenger.close();
+      }
+      pro();
+    }
+    this.requestFileSizeHandler();
+
+    repo = serverMessenger.readMessage();
+    this.requestFileContentHandler();
+
+    repo = serverMessenger.readMessage();
+    if (repo.equals(MessengerConstant.UPLOAD_FILES_FINISH)) {
+      if (filesName.isEmpty()) {
+        requestNormalCloseHandler();
+      }
+      filesName.remove(filesName.size() - 1);
+      pro();
     }
   }
 
@@ -70,7 +102,7 @@ class ClientTest {
       case MessengerConstant.FILE_EXIST_ON_SERVER:
         requestFileExistOnServerHandler();
         break;
-      case MessengerConstant.NORMAL_CLOSE:
+      case MessengerConstant.REQUEST_NORMAL_CLOSE:
         requestNormalCloseHandler();
         break;
     }
@@ -82,7 +114,7 @@ class ClientTest {
   }
 
   private void requestFileExistOnServerHandler() {
-    serverMessenger.writeMessage(MessengerConstant.START_UPLOAD_NEXT_FILE);
+    serverMessenger.writeMessage(MessengerConstant.START_UPLOAD_FILE);
   }
 
   private void requestFileSizeHandler() {
