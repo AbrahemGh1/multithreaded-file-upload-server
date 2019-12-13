@@ -1,6 +1,8 @@
 package com.company.serverSide;
 
-interface UploadFileServiceFactory {
+import com.company.serverSide.FileServiceListener;
+
+public interface UploadFileServiceFactory {
 
   FileServiceListener createFileServiceListener(int portNumber);
 

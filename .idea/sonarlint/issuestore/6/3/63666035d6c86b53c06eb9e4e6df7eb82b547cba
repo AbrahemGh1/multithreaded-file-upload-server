@@ -1,9 +1,0 @@
-
-Fsquid:S1148F"#Use a logger to log this exception.(А╔╘Е¤    8·э┤тя-
-isquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(РЁ═К8юўт╠я-
-Fsquid:S1148:"#Use a logger to log this exception.(А╔╘Е¤    8·э┤тя-
-й%squid:RedundantThrowsDeclarationCheck"qRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from constructor's body.(╔ЧЇИ8юўт╠я-
-rsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(А╤╝Х
-Fsquid:S1148T"#Use a logger to log this exception.(А╔╘Е¤    8·э┤тя-
-^squid:S2134"@Don't extend "Thread", since the "run" method is not overridden.(▌┌ПР8╘П╜ся-
-\squid:S4719D"9Replace charset name argument with StandardCharsets.UTF_8(¤Ц╨Ю     8юўт╠я-

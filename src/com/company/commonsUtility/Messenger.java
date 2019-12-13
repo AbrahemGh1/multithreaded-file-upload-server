@@ -1,4 +1,4 @@
-package com.company.serverSide;
+package com.company.commonsUtility;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

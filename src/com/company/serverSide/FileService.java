@@ -1,5 +1,5 @@
 package com.company.serverSide;
 
-interface FileService extends Service {
+public interface FileService extends Service {
 
 }

@@ -1,15 +1,19 @@
 
 esquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(ÚöË‰
-rsquid:S001002"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÀÕ×ıÿÿÿÿÿ8ûšá ï-
-qsquid:S20957"NUse try-with-resources or close this "DataOutputStream" in a "finally" clause.(È‚íÂıÿÿÿÿ8ûšá ï-
+ksquid:S2095&"MUse try-with-resources or close this "FileInputStream" in a "finally" clause.(šó°8ç¬‘ëï-
+usquid:S00117f"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÀÕ×ıÿÿÿÿÿ8ç¬‘ëï-
+Fsquid:S1148x"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ç¬‘ëï-
+Ÿsquid:S1186["€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(™Ä±Ä8ç¬‘ëï-
+isquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.( ª™•8µëï-
+rsquid:S00100f"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÀÕ×ıÿÿÿÿÿ8ç¬‘ëï-
+¤squid:S1186b"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ĞÅİ×ÿÿÿÿÿ8ç¬‘ëï-
+\"squid:SwitchLastCaseIsDefaultCheck-""Add a default case to this switch.(§Í‡­ùÿÿÿÿ8ç¬‘ëï-
+^squid:S1075%"ARefactor your code to get this URI from a customizable parameter.(é€¼H8ç¬‘ëï-
+Isquid:S1068"+Remove this unused "message" private field.(é¦­Æ8ªÇÑêï-
+\squid:S4719v"9Replace charset name argument with StandardCharsets.UTF_8(ı–Ğÿÿÿÿÿ8ç¬‘ëï-
 wsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ª½Ÿüÿÿÿÿ
-ksquid:S2095"MUse try-with-resources or close this "FileInputStream" in a "finally" clause.(šó°8µ¯¬¿ï-
-isquid:CommentedOutCodeLine0"<This block of commented-out lines of code should be removed.(‡”Ç¸8Åç¢ï-
-hsquid:S2095"KUse try-with-resources or close this "SocketChannel" in a "finally" clause.(‹Ù±+8ÛÈı§ï-
-Zsquid:S1854,"<Remove this useless assignment to local variable "response".(¹˜×¤8ÛÖ£Şï-
-Zsquid:S1854,"<Remove this useless assignment to local variable "response".(¹˜×¤8ÛÖ£Şï-
-^squid:S1075"ARefactor your code to get this URI from a customizable parameter.(é€¼H8› è ï-
-\squid:S4719B"9Replace charset name argument with StandardCharsets.UTF_8(ı–Ğÿÿÿÿÿ8ÄÚá¼ï-
-usquid:S001172"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÀÕ×ıÿÿÿÿÿ8ûšá ï-
-dsquid:UselessImportCheck"4Remove this unused import 'java.io.DataInputStream'.(”•úºÿÿÿÿÿ8ïî´âï-
-Fsquid:S1148D"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ïî´âï-
+qsquid:S2095k"NUse try-with-resources or close this "DataOutputStream" in a "finally" clause.(È‚íÂıÿÿÿÿ8ç¬‘ëï-
+Fsquid:S1148O"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8ç¬‘ëï-
+Ÿsquid:S1186_"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(°İßò8ç¬‘ëï-
+isquid:CommentedOutCodeLineF"<This block of commented-out lines of code should be removed.(‡”Ç¸8ç¬‘ëï-
+qsquid:UselessImportCheck"ARemove this unused import 'com.company.commonsUtility.Messenger'.(®Æˆ¤úÿÿÿÿ8¼™€ìï-

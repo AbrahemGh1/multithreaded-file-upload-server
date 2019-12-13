@@ -1,6 +1,0 @@
-
-rsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(€Ñ¼•
-usquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(šûÀ§úÿÿÿÿ8Î¨á¤ï-
-jsquid:UselessImportCheck":Remove this unused import 'java.util.concurrent.Executor'.(÷ı¶Œúÿÿÿÿ8éÇ§áï-
-ksquid:UselessImportCheck";Remove this unused import 'java.util.concurrent.Executors'.(äåÒÛÿÿÿÿÿ8éÇ§áï-
-bsquid:S1610"DConvert the abstract class "DownloadFileTemplate" into an interface.(Ã« 8éÇ§áï-

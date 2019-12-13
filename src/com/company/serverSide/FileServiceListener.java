@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-class FileServiceListener implements Changeable {
+public class FileServiceListener implements Changeable {
 
   private int maxNumberOfClients=100;
   private ServerSocketChannel serviceSocket;

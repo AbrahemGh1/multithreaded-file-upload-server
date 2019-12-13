@@ -1,11 +1,11 @@
 package com.company.serverSide;
 
-class UploadFileService implements FileService {
+public class UploadFileService implements FileService {
 
   private FileServiceListener fileServiceListener;
   private Thread fileServiceListenerThread;
 
-  UploadFileService(UploadFileServiceFactory uploadFileServiceFactory) {
+  public UploadFileService(UploadFileServiceFactory uploadFileServiceFactory) {
     fileServiceListener = uploadFileServiceFactory.createFileServiceListener(2022);//need to change
     fileServiceListenerThread = new Thread(fileServiceListener);
   }

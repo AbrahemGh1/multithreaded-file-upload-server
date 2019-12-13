@@ -1,6 +1,7 @@
 package com.company.serverSide;
 
-interface Service {
+
+public interface Service {
 
   void shutdownService();
 

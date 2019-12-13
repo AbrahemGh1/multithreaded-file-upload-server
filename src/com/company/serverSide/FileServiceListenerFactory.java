@@ -1,6 +1,7 @@
 package com.company.serverSide;
 
-class FileServiceListenerFactory implements UploadFileServiceFactory {
+
+public class FileServiceListenerFactory implements UploadFileServiceFactory {
 
 
   @Override

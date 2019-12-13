@@ -1,6 +1,5 @@
 package com.company.serverSide;
 
-
 import java.io.IOException;
 
 public class Main{
