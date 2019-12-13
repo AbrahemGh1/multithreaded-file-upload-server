@@ -1,13 +1,19 @@
 package com.company.Client;
 
 import com.company.commonsUtility.Messenger;
+import com.company.commonsUtility.MessengerConstant;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.nio.channels.FileChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class ClientTest {
@@ -16,45 +22,95 @@ class ClientTest {
 
   private int numberOfFiles;
 
-  final private Messenger serverMessenger;
-  final Path p = Paths.get(System.getProperty("user.dir")+ File.separator+ "ClientFilesToTest");
-  private final int NumberOfFilesInDirectory;
+  private final Messenger serverMessenger;
+  private final Path directoryPath = Paths
+      .get(System.getProperty("user.dir") + File.separator + "ClientFilesToTest");
+  private List filesName;
 
   public ClientTest() throws IOException {
     SocketChannel socketChannel = SocketChannel
         .open(new InetSocketAddress("localhost", portNumber++));
     this.serverMessenger = new Messenger(socketChannel);
-    NumberOfFilesInDirectory=countNumberOfFileInDirectory(p);
-
+    filesName = getFilesNamesInDirectory();
   }
 
-  public void setNumberOfFiles(int numberOfFiles) {
-    this.numberOfFiles = numberOfFiles;
-  }
+  private ArrayList getFilesNamesInDirectory() {
+    List<String> FilesNamesInDirectory = null;
+    try (Stream<Path> walk = Files.walk(directoryPath)) {
+      FilesNamesInDirectory = walk.filter(Files::isRegularFile)
+          .map(x -> x.toString()).filter(f -> f.endsWith(".txt")).collect(Collectors.toList());
 
- private int countNumberOfFileInDirectory(Path p){
-   int count=0;
-   try (Stream<Path> files = Files.list(Paths.get("your/path/here"))) {
-      count = (int)files.count();
-   } catch (IOException e) {
-     e.printStackTrace();
-   }
-   return count;
- }
+      FilesNamesInDirectory.forEach(System.out::println);
 
- private void startSendFiles(){
-    int i=0;
-    while (i<numberOfFiles){
-      String fileName="";
-      sendFile(fileName);
-      i++;
+    } catch (IOException e) {
+      e.printStackTrace();
     }
- }
+    return (ArrayList) FilesNamesInDirectory;
+  }
 
-  private void sendFile(String fileName) {
+  public void startUploadFiles() {
+    while (!filesName.isEmpty()) {
+      UploadFile((String) filesName.get(filesName.size() - 1));
+      filesName.remove(filesName.size()-1);
+    }
+  }
 
+  private void UploadFile(String fileName) {
+    String response = serverMessenger.readMessage();
+    switch (response) {
+      case MessengerConstant.REQUEST_FILE_NAME:
+        requestFileNameHandler();
+        break;
+      case MessengerConstant.REQUEST_FILE_SIZE:
+        requestFileSizeHandler();
+        break;
+      case MessengerConstant.REQUEST_FILE_CONTENT:
+        requestFileContentHandler();
+        break;
+      case MessengerConstant.FILE_EXIST_ON_SERVER:
+        requestFileExistOnServerHandler();
+        break;
+      case MessengerConstant.NORMAL_CLOSE:
+        requestNormalCloseHandler();
+        break;
+    }
+  }
+
+  private void requestFileNameHandler() {
+    String fileName = (String) filesName.get(filesName.size() - 1);
+    serverMessenger.writeMessage(fileName);
+  }
+
+  private void requestFileExistOnServerHandler() {
+    serverMessenger.writeMessage(MessengerConstant.START_UPLOAD_NEXT_FILE);
+  }
+
+  private void requestFileSizeHandler() {
+    File f = new File(
+        String.valueOf(directoryPath + File.separator + filesName.get(filesName.size() - 1)));
+    try (FileInputStream fc2 = new FileInputStream(f)) {
+      serverMessenger.writeMessage(fc2.getChannel().size() + "");
+    } catch (IOException e) {
+      System.out.println(e);
+    }
+  }
+
+  private void requestFileContentHandler() {
+    SocketChannel socketChannel = serverMessenger.getCLIENT_SOCKET();
+    String fillPath = directoryPath + File.separator + filesName.get(filesName.size() - 1);
+    try {
+      File f = new File(fillPath);
+      FileInputStream fileInputStream = new FileInputStream(f);
+      FileChannel fc = fileInputStream.getChannel();
+      System.out.println(fc.transferTo(0, fc.size(), socketChannel));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
   }
 
+  private void requestNormalCloseHandler() {
+    serverMessenger.close();
+  }
 
 }

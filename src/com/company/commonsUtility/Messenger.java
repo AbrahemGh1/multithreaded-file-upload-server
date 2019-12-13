@@ -51,6 +51,13 @@ public class Messenger {
       e.printStackTrace();
     }
   }
+  public void close(){
+    try {
+      CLIENT_SOCKET.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
   public SocketChannel getCLIENT_SOCKET(){
     return CLIENT_SOCKET;
