@@ -1,0 +1,7 @@
+
+ysquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(€Ñ¼•8Ìè™Êî-
+Tsquid:S2696"6Make the enclosing method "static" or remove this set.(·Ö8Ê¿¤Æî-
+‡squid:S3008"dRename this field "FileServiceListenerStatus" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯éŒşÿÿÿÿ8¬½Ùáï-
+Ssquid:S2209"5Change this instance-reference to a static reference.(·Ö8Ê¿¤Æî-
+Ysquid:S26963"6Make the enclosing method "static" or remove this set.(³ªà…üÿÿÿÿ8øàÆî-
+Jsquid:S1068",Remove this unused "executor" private field.(‰à•“8ªô«âï-

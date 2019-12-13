@@ -1,0 +1,29 @@
+
+h
+8src/com/company/serverSide/UploadFileServiceFactory.java,1\f\1f3fe781d748731c8187f103a649ea3a64fb627c
+V
+&src/com/company/serverSide/Status.java,a\9\a98ed74f98ac63fbb36e1c1504d4533c66c99bde
+W
+'src/com/company/serverSide/Service.java,1\f\1fa1a8f5a6e232536e8555caf12eed2b1ae7f49f
+Z
+*src/com/company/serverSide/Changeable.java,1\d\1dbe822424afe633498f5191af3a41292458244b
+[
++src/com/company/serverSide/FileService.java,0\7\07ec0c2f596408be3a42cb449bda7b3c544d5f8d
+c
+3src/com/company/serverSide/FileServiceListener.java,6\1\61da9a7e49d494c1889b53c7e8b4305357daed07
+j
+:src/com/company/serverSide/FileServiceListenerFactory.java,8\9\89e534b0c4567686643df5238d82c57f2ff68d1f
+T
+$src/com/company/serverSide/Main.java,7\e\7e6d103c24ff1930bcd9436db035d34ac6ce16ef
+O
+src/com/company/Client/cli.java,4\2\423abace4ebf728709ac4ae3a90ee22be344fe2a
+j
+:src/com/company/serverSide/UploaderFileServiceHandler.java,6\3\63666035d6c86b53c06eb9e4e6df7eb82b547cba
+a
+1src/com/company/serverSide/UploadFileService.java,5\0\509983d89644ac4bde48f37a8e0865d5e5560c97
+P
+ src/Client1FilesToTest/test0.txt,6\5\65107dc784bf2dd0517edc6fdb4d04f3f432490e
+P
+ src/Client2FilesToTest/test0.txt,f\1\f129b52f48ed50ebba1b343deb92687849722135
+d
+4src/com/company/serverSide/DownloadFileTemplate.java,6\1\6150071683f99acdf5eed6590f31ceb6cbc66e12
