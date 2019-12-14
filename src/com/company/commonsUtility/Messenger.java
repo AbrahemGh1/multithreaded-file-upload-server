@@ -1,9 +1,7 @@
 package com.company.commonsUtility;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.nio.channels.SocketChannel;
 
 public class Messenger {
@@ -42,16 +40,7 @@ public class Messenger {
     return message.trim();
   }
 
-  private void download(String fileName, int fileSize) {
-    try (FileChannel fc = new FileOutputStream(fileName).getChannel()) {
-
-      System.out.println(fc.transferFrom(CLIENT_SOCKET, 0, fileSize));
-      System.out.println("File size: " + fc.size());
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-  public void close(){
+  public void close() {
     try {
       CLIENT_SOCKET.close();
     } catch (IOException e) {
@@ -59,7 +48,7 @@ public class Messenger {
     }
   }
 
-  public SocketChannel getCLIENT_SOCKET(){
+  public SocketChannel getCLIENT_SOCKET() {
     return CLIENT_SOCKET;
   }
 }

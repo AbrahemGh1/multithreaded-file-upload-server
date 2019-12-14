@@ -19,9 +19,6 @@ import java.util.stream.Stream;
 class ClientTest {
 
   private static int portNumber = 2022;
-
-  private int numberOfFiles;
-
   private final Messenger serverMessenger;
   private final Path directoryPath = Paths
       .get(System.getProperty("user.dir") + File.separator + "ClientFilesToTest");
@@ -50,86 +47,63 @@ class ClientTest {
 
   public void startUploadFiles() {
     while (!filesName.isEmpty()) {
-      serverMessenger.writeMessage(MessengerConstant.START_UPLOAD_FILE);
-      UploadFile((String) filesName.get(filesName.size() - 1));
+      uploadFile();
       filesName.remove(filesName.size() - 1);
     }
   }
 
-  private void pro() {
-    String repo = "";
+  private void uploadFile() {
     serverMessenger.writeMessage(MessengerConstant.START_UPLOAD_FILE);
-
-    repo = serverMessenger.readMessage();
-    this.requestFileNameHandler();
-
-    repo = serverMessenger.readMessage();
-    if (repo.equals(MessengerConstant.FILE_EXIST_ON_SERVER)) {
-      filesName.remove(filesName.size() - 1);
-      if (filesName.isEmpty()) {
-        this.requestNormalCloseHandler();
-        serverMessenger.close();
-      }
-      pro();
-    }
-    this.requestFileSizeHandler();
-
-    repo = serverMessenger.readMessage();
-    this.requestFileContentHandler();
-
-    repo = serverMessenger.readMessage();
-    if (repo.equals(MessengerConstant.UPLOAD_FILES_FINISH)) {
-      if (filesName.isEmpty()) {
-        requestNormalCloseHandler();
-      }
-      filesName.remove(filesName.size() - 1);
-      pro();
-    }
-  }
-
-  private void UploadFile(String fileName) {
     String response = serverMessenger.readMessage();
-    switch (response) {
-      case MessengerConstant.REQUEST_FILE_NAME:
-        requestFileNameHandler();
-        break;
-      case MessengerConstant.REQUEST_FILE_SIZE:
-        requestFileSizeHandler();
-        break;
-      case MessengerConstant.REQUEST_FILE_CONTENT:
-        requestFileContentHandler();
-        break;
-      case MessengerConstant.FILE_EXIST_ON_SERVER:
-        requestFileExistOnServerHandler();
-        break;
-      case MessengerConstant.REQUEST_NORMAL_CLOSE:
-        requestNormalCloseHandler();
-        break;
+    while (!response.equals(MessengerConstant.UPLOAD_FILE_FINISH)) {
+      switch (response) {
+        case MessengerConstant.REQUEST_FILE_NAME:
+          requestFileNameHandler();
+          break;
+        case MessengerConstant.REQUEST_FILE_SIZE:
+          requestFileSizeHandler();
+          break;
+        case MessengerConstant.REQUEST_FILE_CONTENT:
+          requestFileContentHandler();
+          break;
+        case MessengerConstant.FILE_EXIST_ON_SERVER:
+          requestFileExistOnServerHandler();
+          break;
+        case MessengerConstant.REQUEST_NORMAL_CLOSE:
+          requestNormalCloseHandler();
+          break;
+      }
+      response = serverMessenger.readMessage();
     }
   }
+
 
   private void requestFileNameHandler() {
     String fileName = (String) filesName.get(filesName.size() - 1);
-    serverMessenger.writeMessage(fileName);
+    System.out.println(Paths.get(fileName).getFileName().toFile());
+    serverMessenger.writeMessage(String.valueOf(Paths.get(fileName).getFileName().toFile()));
   }
 
   private void requestFileExistOnServerHandler() {
+    filesName.remove(filesName.size() - 1);
+    if (filesName.isEmpty()) {
+      serverMessenger.writeMessage(MessengerConstant.REQUEST_NORMAL_CLOSE);
+    }
     serverMessenger.writeMessage(MessengerConstant.START_UPLOAD_FILE);
   }
 
   private void requestFileSizeHandler() {
-    File f = new File(
-        String.valueOf(directoryPath + File.separator + filesName.get(filesName.size() - 1)));
+    File f = new File((String) filesName.get(filesName.size() - 1));
     try (FileInputStream fc2 = new FileInputStream(f)) {
       serverMessenger.writeMessage(fc2.getChannel().size() + "");
     } catch (IOException e) {
-      System.out.println(e);
+      e.printStackTrace();
     }
   }
 
   private void requestFileContentHandler() {
     SocketChannel socketChannel = serverMessenger.getCLIENT_SOCKET();
-    String fillPath = directoryPath + File.separator + filesName.get(filesName.size() - 1);
+    String fillPath = (String) filesName.get(filesName.size() - 1);
     try {
       File f = new File(fillPath);
       FileInputStream fileInputStream = new FileInputStream(f);
