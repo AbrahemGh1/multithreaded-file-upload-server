@@ -3,7 +3,7 @@ package com.company.commonsUtility;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
-
+import java.nio.charset.StandardCharsets;
 public class Messenger {
 
   private final SocketChannel CLIENT_SOCKET;
@@ -28,19 +28,23 @@ public class Messenger {
     String message = "";
     try {
       CLIENT_SOCKET.read(byteBuffer);
-      message = new String(byteBuffer.array(), "UTF-8");
+      message = new String(byteBuffer.array(), StandardCharsets.UTF_8);
     } catch (IOException e) {
-      e.printStackTrace();
+      System.out.println(MessengerConstant.ERROR_CLOSE);
     }
     if (message.trim().equals("")) {
       System.out.println("Nothing");
       return "Nothing";
     }
     System.out.println(message);
+    if(doesClientRequestsToClose(message))
+      this.close();
     return message.trim();
   }
-
-  public void close() {
+  private boolean doesClientRequestsToClose(String message){
+    return message.equals(MessengerConstant.REQUEST_NORMAL_CLOSE);
+  }
+  public void close(){
     try {
       CLIENT_SOCKET.close();
     } catch (IOException e) {
@@ -48,7 +52,7 @@ public class Messenger {
     }
   }
 
-  public SocketChannel getCLIENT_SOCKET() {
+  public SocketChannel getClientSocket(){
     return CLIENT_SOCKET;
   }
 }

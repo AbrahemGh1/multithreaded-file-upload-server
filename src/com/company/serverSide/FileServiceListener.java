@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
 
 public class FileServiceListener implements Changeable {
 
-  private int maxNumberOfClients=100;
+  private int maxNumberOfClients = 100;
   private ServerSocketChannel serviceSocket;
   private static volatile Status FileServiceListenerStatus = Status.SERVICE_UP;
   private ExecutorService executor = Executors.newFixedThreadPool(maxNumberOfClients);
@@ -22,7 +22,7 @@ public class FileServiceListener implements Changeable {
 
   FileServiceListener(int portNumber) {
     try {
-      serviceSocket= ServerSocketChannel.open();
+      serviceSocket = ServerSocketChannel.open();
       serviceSocket.bind(new InetSocketAddress("localhost", portNumber));
     } catch (IOException e) {
       System.err.println(Arrays.toString(e.getStackTrace()));
@@ -35,8 +35,8 @@ public class FileServiceListener implements Changeable {
       try {
         SocketChannel clientSocket;
         System.out.println("Waiting for Connection:");
-        synchronized (this){
-          clientSocket=serviceSocket.accept();
+        synchronized (this) {
+          clientSocket = serviceSocket.accept();
           System.out.println("Accept  Connection.");
           new UploaderFileServiceHandler(clientSocket).s();
         }
@@ -50,6 +50,8 @@ public class FileServiceListener implements Changeable {
   public void stop() {
     FileServiceListenerStatus = Status.SERVICE_DOWN;
   }
+
+
 
   public Status getStatus() {
     return FileServiceListenerStatus;

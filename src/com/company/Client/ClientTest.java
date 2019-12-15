@@ -13,46 +13,77 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class ClientTest {
+class ClientTest extends Thread {
 
-  private static int portNumber = 2022;
+  private static Integer portNumber = 2022;
+  private static AtomicInteger port = new AtomicInteger(2022);
+  private static volatile int numberOfClient = 0;
   private final Messenger serverMessenger;
   private final Path directoryPath = Paths
       .get(System.getProperty("user.dir") + File.separator + "ClientFilesToTest");
-  private List filesName;
+  private final CountDownLatch startLatch;
+  private List filesPath;
+  private int numberOfFilesUploadedByClient = 0;
 
-  public ClientTest() throws IOException {
-    SocketChannel socketChannel = SocketChannel
-        .open(new InetSocketAddress("localhost", portNumber++));
+
+  public ClientTest(CountDownLatch startLatch) throws IOException {
+    SocketChannel socketChannel;
+    synchronized (portNumber) {
+      System.out.println();
+      socketChannel = SocketChannel
+          .open(new InetSocketAddress("localhost", portNumber));
+    }
     this.serverMessenger = new Messenger(socketChannel);
-    filesName = getFilesNamesInDirectory();
+    filesPath = getFilesNamesInDirectory();
+    this.startLatch = startLatch;
+  }
+
+  @Override
+  public void run() {
+    try {
+      startLatch.await();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    while (!this.isInterrupted()) {
+      this.startUploadFiles();
+    }
+
+    this.interrupt();
+    System.out.println(numberOfClient++);
   }
 
   private ArrayList getFilesNamesInDirectory() {
-    List<String> FilesNamesInDirectory = null;
+    List<String> filesNamesInDirectory = null;
     try (Stream<Path> walk = Files.walk(directoryPath)) {
-      FilesNamesInDirectory = walk.filter(Files::isRegularFile)
-          .map(x -> x.toString()).filter(f -> f.endsWith(".txt")).collect(Collectors.toList());
+      filesNamesInDirectory = walk.filter(Files::isRegularFile)
+          .map(Path::toString).filter(f -> f.endsWith(".txt")).collect(Collectors.toList());
 
-      FilesNamesInDirectory.forEach(System.out::println);
+      filesNamesInDirectory.forEach(System.out::println);
 
     } catch (IOException e) {
       e.printStackTrace();
     }
-    return (ArrayList) FilesNamesInDirectory;
+    return (ArrayList) filesNamesInDirectory;
   }
 
   public void startUploadFiles() {
-    while (!filesName.isEmpty()) {
-      uploadFile();
-      filesName.remove(filesName.size() - 1);
+    while (!filesPath.isEmpty()) {
+      if (uploadFile()) {
+        numberOfFilesUploadedByClient++;
+      }
+      filesPath.remove(filesPath.size() - 1);
     }
+    serverMessenger.writeMessage(MessengerConstant.REQUEST_NORMAL_CLOSE);
+    requestNormalCloseHandler();
   }
 
-  private void uploadFile() {
+  private boolean uploadFile() {
     serverMessenger.writeMessage(MessengerConstant.START_UPLOAD_FILE);
     String response = serverMessenger.readMessage();
     while (!response.equals(MessengerConstant.UPLOAD_FILE_FINISH)) {
@@ -68,32 +99,30 @@ class ClientTest {
           break;
         case MessengerConstant.FILE_EXIST_ON_SERVER:
           requestFileExistOnServerHandler();
-          break;
+          return false;
         case MessengerConstant.REQUEST_NORMAL_CLOSE:
           requestNormalCloseHandler();
           break;
       }
       response = serverMessenger.readMessage();
     }
+    return true;
   }
 
 
   private void requestFileNameHandler() {
-    String fileName = (String) filesName.get(filesName.size() - 1);
+    String fileName = (String) filesPath.get(filesPath.size() - 1);
     System.out.println(Paths.get(fileName).getFileName().toFile());
     serverMessenger.writeMessage(String.valueOf(Paths.get(fileName).getFileName().toFile()));
   }
 
   private void requestFileExistOnServerHandler() {
-    filesName.remove(filesName.size() - 1);
-    if (filesName.isEmpty()) {
-      serverMessenger.writeMessage(MessengerConstant.REQUEST_NORMAL_CLOSE);
-    }
-    serverMessenger.writeMessage(MessengerConstant.START_UPLOAD_FILE);
+    System.out.println(
+        filesPath.get(filesPath.size() - 1) + ": " + MessengerConstant.FILE_EXIST_ON_SERVER);
   }
 
   private void requestFileSizeHandler() {
-    File f = new File((String) filesName.get(filesName.size() - 1));
+    File f = new File((String) filesPath.get(filesPath.size() - 1));
     try (FileInputStream fc2 = new FileInputStream(f)) {
       serverMessenger.writeMessage(fc2.getChannel().size() + "");
     } catch (IOException e) {
@@ -102,8 +131,8 @@ class ClientTest {
   }
 
   private void requestFileContentHandler() {
-    SocketChannel socketChannel = serverMessenger.getCLIENT_SOCKET();
-    String fillPath = (String) filesName.get(filesName.size() - 1);
+    SocketChannel socketChannel = serverMessenger.getClientSocket();
+    String fillPath = (String) filesPath.get(filesPath.size() - 1);
     try {
       File f = new File(fillPath);
       FileInputStream fileInputStream = new FileInputStream(f);

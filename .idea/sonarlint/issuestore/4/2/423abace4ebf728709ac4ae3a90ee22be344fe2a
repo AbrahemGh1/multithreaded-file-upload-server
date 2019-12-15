@@ -1,19 +1,3 @@
 
-esquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(ΪφΛ‰
-ksquid:S2095&"MUse try-with-resources or close this "FileInputStream" in a "finally" clause.(σ°8η¬‘λο-
-usquid:S00117f"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ΐΥΧύÿÿÿÿÿ8η¬‘λο-
-Fsquid:S1148x"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8η¬‘λο-
-squid:S1186["€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(™Δ±Δ8η¬‘λο-
-isquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.( ª™•8µλο-
-rsquid:S00100f"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ΐΥΧύÿÿÿÿÿ8η¬‘λο-
-¤squid:S1186b"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ΠΕέΧÿÿÿÿÿ8η¬‘λο-
-\"squid:SwitchLastCaseIsDefaultCheck-""Add a default case to this switch.(§Ν‡­ωÿÿÿÿ8η¬‘λο-
-^squid:S1075%"ARefactor your code to get this URI from a customizable parameter.(ι€ΌH8η¬‘λο-
-Isquid:S1068"+Remove this unused "message" private field.(ι¦­Ζ8ªΗΡκο-
-\squid:S4719v"9Replace charset name argument with StandardCharsets.UTF_8(ύ–Πÿÿÿÿÿ8η¬‘λο-
 wsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ª½όÿÿÿÿ
-qsquid:S2095k"NUse try-with-resources or close this "DataOutputStream" in a "finally" clause.(Θ‚νΒύÿÿÿÿ8η¬‘λο-
-Fsquid:S1148O"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8η¬‘λο-
-squid:S1186_"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(°έίς8η¬‘λο-
-isquid:CommentedOutCodeLineF"<This block of commented-out lines of code should be removed.(‡”ΗΈ8η¬‘λο-
-qsquid:UselessImportCheck"ARemove this unused import 'com.company.commonsUtility.Messenger'.(®Ζ¤ϊÿÿÿÿ8Ό™€μο-
+esquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(ΪφΛ‰
