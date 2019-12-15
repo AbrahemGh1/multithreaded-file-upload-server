@@ -29,6 +29,7 @@ class ClientTest extends Thread {
   private final CountDownLatch startLatch;
   private List filesPath;
   private int numberOfFilesUploadedByClient = 0;
+  private boolean finish = false;
 
 
   public ClientTest(CountDownLatch startLatch) throws IOException {
@@ -50,11 +51,10 @@ class ClientTest extends Thread {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    while (!this.isInterrupted()) {
+    while (!finish) {
       this.startUploadFiles();
     }
-
-    this.interrupt();
+    finish = true;
     System.out.println(numberOfClient++);
   }
 

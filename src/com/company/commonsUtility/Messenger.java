@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
+
 public class Messenger {
 
   private final SocketChannel CLIENT_SOCKET;
@@ -14,11 +17,14 @@ public class Messenger {
     this.CLIENT_SOCKET = socketChannel;
   }
 
-  public void writeMessage(String message) {
-    try {
-      CLIENT_SOCKET.write(ByteBuffer.wrap(message.getBytes()));
-    } catch (IOException e) {
-      e.printStackTrace();
+  public void writeMessage(@NotNull String message) {
+    Objects.requireNonNull(message, "message cant be null");
+    if (CLIENT_SOCKET.isOpen()) {
+      try {
+        CLIENT_SOCKET.write(ByteBuffer.wrap(message.getBytes()));
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
   }
 

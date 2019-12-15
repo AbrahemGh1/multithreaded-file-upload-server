@@ -1,27 +1,26 @@
 package com.company.serverSide;
 
-import com.company.serverSide.ReceiveFileProtocol;
-import com.company.serverSide.ReceiveFileTCPProtocol;
+
+import com.sun.istack.internal.NotNull;
 import java.io.IOException;
 import java.net.Socket;
 import java.nio.channels.SocketChannel;
 import java.util.Arrays;
 import java.util.Objects;
-import org.jetbrains.annotations.NotNull;
 
 
-public class UploaderFileServiceHandler{
+public class UploaderFileServiceHandler extends Thread {
 
   private final ReceiveFileProtocol receiveFileProtocol;
 
 
   public UploaderFileServiceHandler(@NotNull SocketChannel s) throws IOException {
-    Objects.requireNonNull(s, "Socket must not be null.");
+    Objects.requireNonNull(s, "The SocketChannel parameter must not be null.");
     receiveFileProtocol = new ReceiveFileTCPProtocol(s);
   }
 
   public static void closeConnection(@NotNull Socket socket) {
-    Objects.requireNonNull(socket, "Socket must not be null.");
+    Objects.requireNonNull(socket, " The Socket parameter must not be null.");
     try {
       socket.close();
     } catch (IOException e) {
@@ -29,7 +28,8 @@ public class UploaderFileServiceHandler{
     }
   }
 
-  public void s() {
-    receiveFileProtocol.startDownload();
+  @Override
+  public void run() {
+    receiveFileProtocol.StartDownloadFiles();
   }
 }

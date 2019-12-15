@@ -10,15 +10,11 @@ import java.util.concurrent.Executors;
 
 public class FileServiceListener implements Changeable {
 
-  private int maxNumberOfClients = 100;
+  private static volatile Status fileServiceListenerStatus = Status.SERVICE_UP;
   private ServerSocketChannel serviceSocket;
-  private static volatile Status FileServiceListenerStatus = Status.SERVICE_UP;
+  private int maxNumberOfClients = 10;
   private ExecutorService executor = Executors.newFixedThreadPool(maxNumberOfClients);
 
-
-  public void setStatus(Status status) {
-    this.FileServiceListenerStatus = status;
-  }
 
   FileServiceListener(int portNumber) {
     try {
@@ -31,14 +27,16 @@ public class FileServiceListener implements Changeable {
 
   @Override
   public void run() {
-    while (FileServiceListenerStatus == Status.SERVICE_UP) {
+    while (fileServiceListenerStatus == Status.SERVICE_UP) {
       try {
-        SocketChannel clientSocket;
         System.out.println("Waiting for Connection:");
+        SocketChannel clientSocket;
         synchronized (this) {
           clientSocket = serviceSocket.accept();
           System.out.println("Accept  Connection.");
-          new UploaderFileServiceHandler(clientSocket).s();
+          Thread t = new UploaderFileServiceHandler(clientSocket);
+          executor.submit(t);
+
         }
       } catch (IOException e) {
         System.err.println(Arrays.toString(e.getStackTrace()));
@@ -48,12 +46,14 @@ public class FileServiceListener implements Changeable {
 
   @Override
   public void stop() {
-    FileServiceListenerStatus = Status.SERVICE_DOWN;
+    fileServiceListenerStatus = Status.SERVICE_DOWN;
   }
 
-
-
   public Status getStatus() {
-    return FileServiceListenerStatus;
+    return fileServiceListenerStatus;
+  }
+
+  public void setStatus(Status status) {
+    fileServiceListenerStatus = status;
   }
 }
