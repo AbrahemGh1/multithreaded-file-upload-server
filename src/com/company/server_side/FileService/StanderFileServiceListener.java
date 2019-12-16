@@ -1,6 +1,6 @@
 package com.company.server_side.FileService;
 
-import com.company.server_side.UploaderFileServiceHandler;
+import com.company.server_side.t.*;
 import com.company.server_side.any.ServiceStatus;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public class StanderFileServiceListener implements FileServiceListener {
 
-  private  volatile ServiceStatus fileServiceListenerStatus = ServiceStatus.SERVICE_UP;
+  private volatile ServiceStatus fileServiceListenerStatus = ServiceStatus.SERVICE_UP;
   private ServerSocketChannel serviceSocket;
 
   StanderFileServiceListener(int portNumber) {
@@ -39,15 +39,15 @@ public class StanderFileServiceListener implements FileServiceListener {
   }
 
   /**
-   * @param clientSocket  to be handle
-   * <p>handle client request by create UploaderFileServiceHandler
-   * and add it to schedule wait to be start execute
-   * <p/>
+   * @param clientSocket to be handle
+   *                     <p>handle client request by create UploaderFileServiceHandler
+   *                     and add it to schedule wait to be start execute
+   *                     <p/>
    * @throws IOException if any I/O Exception happen during communication
    */
   private synchronized void handleRequest(SocketChannel clientSocket) throws IOException {
     Objects.requireNonNull(clientSocket, "SocketChannel cant be null.");
-    UploaderFileServiceHandler service = new UploaderFileServiceHandler(clientSocket);
+    UploaderFileServiceHandler service = new UploaderFileServiceHandler(new StanderUploaderFileServiceHandler(clientSocket));
     service.schedule((service));
   }
 

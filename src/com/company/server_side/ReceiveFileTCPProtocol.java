@@ -49,4 +49,9 @@ public class ReceiveFileTCPProtocol extends ReceiveFileProtocol {
       e.printStackTrace();
     }
   }
+
+  @Override
+  public void serviceHandler() {
+    startDownloadFiles();
+  }
 }

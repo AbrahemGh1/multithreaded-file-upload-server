@@ -1,7 +1,7 @@
 package com.company.server_side.FileService;
 
 
-public interface UploadFileServiceFactory {
+ interface UploadFileServiceFactory {
 
   /**
    * <p>Create a Object of one of concentrate implantation of the FileServiceListener interface to run

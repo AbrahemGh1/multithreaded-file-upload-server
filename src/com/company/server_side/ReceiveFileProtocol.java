@@ -12,11 +12,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 
-public abstract class ReceiveFileProtocol {
+public abstract class ReceiveFileProtocol extends FileServiceHandler {
 
   protected final Messenger MESSENGER;
 
   public ReceiveFileProtocol(SocketChannel clientSocket) {
+    super(10);
     MESSENGER = new Messenger(clientSocket);
   }
 

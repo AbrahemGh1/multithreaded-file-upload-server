@@ -1,26 +1,23 @@
-package com.company.server_side;
+package com.company.server_side.t;
 
 
 import static com.company.server_side.ServerConfig.MAX_NUMBER_CLIENTS;
 
+import com.company.server_side.FileServiceHandler;
+import com.company.server_side.ReceiveFileProtocol;
 import com.sun.istack.internal.NotNull;
 import java.io.IOException;
 import java.net.Socket;
-import java.nio.channels.SocketChannel;
 import java.util.Arrays;
 import java.util.Objects;
-
 
 
 public class UploaderFileServiceHandler extends FileServiceHandler {
 
   private final ReceiveFileProtocol receiveFileProtocol;
-
-
-  public UploaderFileServiceHandler(@NotNull SocketChannel s) {
+  public UploaderFileServiceHandler(FileServiceHandlerFactory s){
     super(MAX_NUMBER_CLIENTS);
-    Objects.requireNonNull(s, "The SocketChannel parameter must not be null.");
-    receiveFileProtocol = new ReceiveFileTCPProtocol(s);
+    receiveFileProtocol=s.createFileProtocol();
   }
 
   public static void closeConnection(@NotNull Socket socket) {
@@ -35,6 +32,5 @@ public class UploaderFileServiceHandler extends FileServiceHandler {
   @Override
   public void serviceHandler() {
     receiveFileProtocol.startDownloadFiles();
-
   }
 }
