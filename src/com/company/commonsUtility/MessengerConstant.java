@@ -6,6 +6,7 @@ public final class MessengerConstant {
     throw new UnsupportedOperationException();
   }
 
+  // Constants
   public static final String REQUEST_FILE_NAME = "REQUEST_FILE_NAME";
   public static final String REQUEST_FILE_SIZE = "REQUEST_FILE_SIZE";
   public static final String REQUEST_FILE_CONTENT = "REQUEST_FILE_CONTENT";

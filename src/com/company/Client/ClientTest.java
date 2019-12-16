@@ -21,41 +21,39 @@ import java.util.stream.Stream;
 class ClientTest extends Thread {
 
   private static Integer portNumber = 2022;
-  private static AtomicInteger port = new AtomicInteger(2022);
-  private static volatile int numberOfClient = 0;
+  public static volatile int numberOfClient = 0;
   private final Messenger serverMessenger;
   private final Path directoryPath = Paths
       .get(System.getProperty("user.dir") + File.separator + "ClientFilesToTest");
   private final CountDownLatch startLatch;
   private List filesPath;
   private int numberOfFilesUploadedByClient = 0;
-  private boolean finish = false;
 
 
   public ClientTest(CountDownLatch startLatch) throws IOException {
     SocketChannel socketChannel;
-    synchronized (portNumber) {
       System.out.println();
       socketChannel = SocketChannel
           .open(new InetSocketAddress("localhost", portNumber));
-    }
     this.serverMessenger = new Messenger(socketChannel);
     filesPath = getFilesNamesInDirectory();
+
     this.startLatch = startLatch;
   }
 
   @Override
   public void run() {
     try {
-      startLatch.await();
+      startLatch.await();// wait all threads to be in same point to start at same time
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    while (!finish) {
       this.startUploadFiles();
-    }
-    finish = true;
-    System.out.println(numberOfClient++);
+    System.out.println(numberOfClient--);
+    serverMessenger.close();
+    this.toString();
+    if(numberOfClient==0)
+      System.exit(0);
   }
 
   private ArrayList getFilesNamesInDirectory() {
@@ -79,6 +77,7 @@ class ClientTest extends Thread {
       }
       filesPath.remove(filesPath.size() - 1);
     }
+    this.toString();
     serverMessenger.writeMessage(MessengerConstant.REQUEST_NORMAL_CLOSE);
     requestNormalCloseHandler();
   }
@@ -118,7 +117,7 @@ class ClientTest extends Thread {
 
   private void requestFileExistOnServerHandler() {
     System.out.println(
-        filesPath.get(filesPath.size() - 1) + ": " + MessengerConstant.FILE_EXIST_ON_SERVER);
+       Paths.get(filesPath.get(filesPath.size() - 1).toString()).toFile().getName()  + ": " + MessengerConstant.FILE_EXIST_ON_SERVER);
   }
 
   private void requestFileSizeHandler() {
@@ -148,4 +147,10 @@ class ClientTest extends Thread {
     serverMessenger.close();
   }
 
+  @Override
+  public String toString() {
+    return "ClientTest{" +"ClientTest.numberOfClient="+ClientTest.numberOfClient+
+        "numberOfFilesUploadedByClient=" + numberOfFilesUploadedByClient +
+        '}';
+  }
 }

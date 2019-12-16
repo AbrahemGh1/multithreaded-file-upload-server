@@ -1,4 +1,4 @@
-package com.company.serverSide;
+package com.company.server_side;
 
 
 import static com.company.commonsUtility.MessengerConstant.FILE_EXIST_ON_SERVER;
@@ -20,7 +20,7 @@ public abstract class ReceiveFileProtocol {
     MESSENGER = new Messenger(clientSocket);
   }
 
-  public void StartDownloadFiles() {
+  public void startDownloadFiles() {
     String response = MESSENGER.readMessage();
     while (response.equals(START_UPLOAD_FILE)) {
       startDownloadFile();

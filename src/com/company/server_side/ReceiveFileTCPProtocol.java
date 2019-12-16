@@ -1,4 +1,4 @@
-package com.company.serverSide;
+package com.company.server_side;
 
 
 import com.company.commonsUtility.MessengerConstant;

@@ -12,7 +12,8 @@ public class cli {
     CountDownLatch startLatch = new CountDownLatch(1);
 
 
-    int numberOfClientWantToTest = 100;
+    int numberOfClientWantToTest = 10;
+    ClientTest.numberOfClient=10;
 
     for (int threadNo = 0; threadNo < numberOfClientWantToTest; threadNo++) {
       Thread t = new ClientTest(startLatch);
@@ -20,6 +21,7 @@ public class cli {
     }
 //// give the threads chance to start up
     startLatch.countDown();
+
 
   }
 }

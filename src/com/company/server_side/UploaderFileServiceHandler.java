@@ -1,5 +1,7 @@
-package com.company.serverSide;
+package com.company.server_side;
 
+
+import static com.company.server_side.ServerConfig.MAX_NUMBER_CLIENTS;
 
 import com.sun.istack.internal.NotNull;
 import java.io.IOException;
@@ -9,12 +11,14 @@ import java.util.Arrays;
 import java.util.Objects;
 
 
-public class UploaderFileServiceHandler extends Thread {
+
+public class UploaderFileServiceHandler extends FileServiceHandler {
 
   private final ReceiveFileProtocol receiveFileProtocol;
 
 
-  public UploaderFileServiceHandler(@NotNull SocketChannel s) throws IOException {
+  public UploaderFileServiceHandler(@NotNull SocketChannel s) {
+    super(MAX_NUMBER_CLIENTS);
     Objects.requireNonNull(s, "The SocketChannel parameter must not be null.");
     receiveFileProtocol = new ReceiveFileTCPProtocol(s);
   }
@@ -29,7 +33,8 @@ public class UploaderFileServiceHandler extends Thread {
   }
 
   @Override
-  public void run() {
-    receiveFileProtocol.StartDownloadFiles();
+  public void serviceHandler() {
+    receiveFileProtocol.startDownloadFiles();
+
   }
 }

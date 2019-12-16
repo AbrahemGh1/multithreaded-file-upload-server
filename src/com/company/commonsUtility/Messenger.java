@@ -22,6 +22,7 @@ public class Messenger {
     if (CLIENT_SOCKET.isOpen()) {
       try {
         CLIENT_SOCKET.write(ByteBuffer.wrap(message.getBytes()));
+        System.out.println(message);
       } catch (IOException e) {
         e.printStackTrace();
       }
