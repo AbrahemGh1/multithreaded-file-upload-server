@@ -1,14 +1,13 @@
-package com.company.server_side.protocol;
+package com.company.server_side.protocols;
 
 
 import static com.company.commonsUtility.MessengerConstant.FILE_EXIST_ON_SERVER;
 import static com.company.commonsUtility.MessengerConstant.REQUEST_NORMAL_CLOSE;
 import static com.company.commonsUtility.MessengerConstant.START_UPLOAD_FILE;
 import static com.company.commonsUtility.MessengerConstant.UPLOAD_FILE_FINISH;
-import static com.company.server_side.Service.ServerConfig.MAX_NUMBER_CLIENTS;
 
 import com.company.commonsUtility.Messenger;
-import com.company.server_side.handler.FileServiceHandler;
+import com.company.server_side.handler.ServiceHandler;
 import java.nio.channels.SocketChannel;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -40,15 +39,14 @@ import java.nio.file.Paths;
  * </li>
  *
  * @author Ibrahim Gharayibh
- * @see com.company.server_side.protocol.ReceiveFileTCPProtocol
+ * @see com.company.server_side.protocols.ReceiveFileTCPProtocol
  */
 
-public abstract class ReceiveFileProtocol extends FileServiceHandler {
+public abstract class ReceiveFileProtocol implements ServiceHandler {
 
   final Messenger MESSENGER;
 
   ReceiveFileProtocol(SocketChannel clientSocket) {
-    super(MAX_NUMBER_CLIENTS);
     MESSENGER = new Messenger(clientSocket);
   }
 
@@ -117,6 +115,10 @@ public abstract class ReceiveFileProtocol extends FileServiceHandler {
    * @param fileSize <@code>int</code> represent file size to be receive from client.
    */
   public abstract void receiveFileContent(Path path, String fileName, int fileSize);
+  @Override
+  public void serviceHandler() {
+    startDownloadFiles();
+  }
 
 }
 

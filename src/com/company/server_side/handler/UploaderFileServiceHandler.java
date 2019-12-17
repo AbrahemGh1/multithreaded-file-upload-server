@@ -3,7 +3,7 @@ package com.company.server_side.handler;
 
 import static com.company.server_side.Service.ServerConfig.MAX_NUMBER_CLIENTS;
 
-import com.company.server_side.protocol.ReceiveFileProtocol;
+import com.company.server_side.protocols.ReceiveFileProtocol;
 import com.sun.istack.internal.NotNull;
 import java.io.IOException;
 import java.net.Socket;

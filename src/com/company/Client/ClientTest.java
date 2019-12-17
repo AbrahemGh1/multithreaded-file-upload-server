@@ -44,11 +44,11 @@ class ClientTest extends Thread {
 
   @Override
   public void run() {
-//    try {
-//      startLatch.await();// wait all threads to be in same point to start at same time
-//    } catch (InterruptedException e) {
-//      e.printStackTrace();
-//    }
+    try {
+     startLatch.await();// wait all threads to be in same point to start at same time
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
       this.startUploadFiles();
     System.out.println("numberOfClient: "+numberOfClient--);
     serverMessenger.close();

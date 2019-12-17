@@ -1,8 +1,8 @@
 package com.company.server_side.FileService;
 
-import com.company.server_side.handler.*;
 import com.company.server_side.Service.ServiceStatus;
-import com.company.server_side.schedule.FileServiceScheduler;
+import com.company.server_side.handler.StanderUploaderFileServiceHandler;
+import com.company.server_side.handler.UploaderFileServiceHandler;
 import com.company.server_side.schedule.StanderUploadFileServiceScheduler;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -30,11 +30,11 @@ public class StanderFileServiceListener implements FileServiceListener {
 
   @Override
   public void run() {
-    System.out.println("Waiting for Connection from client:");
     while (fileServiceListenerStatus == ServiceStatus.SERVICE_UP) {
       try {
-        System.out.println("Connection Accepted from client.");
+        System.out.println("Waiting for Connection from client:");
         handleRequest(serviceSocket.accept());
+        System.out.println("Connection Accepted from client.");
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -50,7 +50,8 @@ public class StanderFileServiceListener implements FileServiceListener {
    */
   private void handleRequest(SocketChannel clientSocket) throws IOException {
     Objects.requireNonNull(clientSocket, "SocketChannel cant be null.");
-    UploaderFileServiceHandler service = new UploaderFileServiceHandler(new StanderUploaderFileServiceHandler(clientSocket)); //abstract factory pattern
+    UploaderFileServiceHandler service = new UploaderFileServiceHandler(
+        new StanderUploaderFileServiceHandler(clientSocket)); //abstract factory pattern
 
     //service.schedule((service));
     scheduler.schedule(service);

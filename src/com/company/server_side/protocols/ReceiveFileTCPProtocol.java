@@ -1,4 +1,4 @@
-package com.company.server_side.protocol;
+package com.company.server_side.protocols;
 
 
 import com.company.commonsUtility.MessengerConstant;
@@ -50,8 +50,5 @@ public class ReceiveFileTCPProtocol extends ReceiveFileProtocol {
     }
   }
 
-  @Override
-  public void serviceHandler() {
-    startDownloadFiles();
-  }
+
 }

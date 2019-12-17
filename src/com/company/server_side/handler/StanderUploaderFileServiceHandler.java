@@ -1,7 +1,7 @@
 package com.company.server_side.handler;
 
-import com.company.server_side.protocol.ReceiveFileProtocol;
-import com.company.server_side.protocol.ReceiveFileTCPProtocol;
+import com.company.server_side.protocols.ReceiveFileProtocol;
+import com.company.server_side.protocols.ReceiveFileTCPProtocol;
 import java.nio.channels.SocketChannel;
 import java.util.Objects;
 
