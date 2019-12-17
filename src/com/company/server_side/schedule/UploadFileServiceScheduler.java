@@ -11,8 +11,10 @@ import java.util.concurrent.Executors;
  * with other FileServiceScheduler category.
  *
  * <p>In other word every subclasses implement <@code>Handler<code/> and  attend to handle
- * any <@code>FileService</code> need to  implement <@code>UploadFileServiceScheduler</code>.
+ * any <@code>FileService</code> need to implement <@code>UploadFileServiceScheduler</code>.
  * </p>
+ *
+ * @author Ibrahim Gharayiba
  */
 
 abstract class UploadFileServiceScheduler implements FileServiceScheduler {

@@ -6,7 +6,7 @@ import static com.company.commonsUtility.MessengerConstant.REQUEST_NORMAL_CLOSE;
 import static com.company.commonsUtility.MessengerConstant.START_UPLOAD_FILE;
 import static com.company.commonsUtility.MessengerConstant.UPLOAD_FILE_FINISH;
 
-import com.company.commonsUtility.Messenger;
+import com.company.commonsUtility.BufferMessenger;
 import com.company.server_side.handler.ServiceHandler;
 import java.nio.channels.SocketChannel;
 import java.nio.file.Path;
@@ -44,14 +44,14 @@ import java.nio.file.Paths;
 
 public abstract class ReceiveFileProtocol implements ServiceHandler {
 
-  final Messenger MESSENGER;
+  final BufferMessenger MESSENGER;
 
   ReceiveFileProtocol(SocketChannel clientSocket) {
-    MESSENGER = new Messenger(clientSocket);
+    MESSENGER = new BufferMessenger(clientSocket);
   }
 
   /**
-   * Keep download files until  Receive REQUEST_NORMAL_CLOSE
+   * Keep download files until receive REQUEST_NORMAL_CLOSE message from client.
    */
 
   public void startDownloadFiles() {
@@ -115,6 +115,7 @@ public abstract class ReceiveFileProtocol implements ServiceHandler {
    * @param fileSize <@code>int</code> represent file size to be receive from client.
    */
   public abstract void receiveFileContent(Path path, String fileName, int fileSize);
+
   @Override
   public void serviceHandler() {
     startDownloadFiles();

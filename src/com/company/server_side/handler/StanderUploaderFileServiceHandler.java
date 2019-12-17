@@ -5,7 +5,8 @@ import com.company.server_side.protocols.ReceiveFileTCPProtocol;
 import java.nio.channels.SocketChannel;
 import java.util.Objects;
 
-public class StanderUploaderFileServiceHandler implements FileServiceHandlerFactory{
+public class StanderUploaderFileServiceHandler implements FileServiceHandlerFactory {
+
   private final SocketChannel s;
 
   public StanderUploaderFileServiceHandler(SocketChannel s) {

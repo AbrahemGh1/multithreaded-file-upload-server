@@ -15,4 +15,5 @@ public final class MessengerConstant {
   public static final String ERROR_CLOSE = "ERROR_CLOSE";
   public static final String START_UPLOAD_FILE="START_UPLOAD_FILE";
   public static final String UPLOAD_FILE_FINISH="UPLOAD_FILE_FINISH";
+  public static final String FILE_UPLOAD_SUCCESSFULLY="FILE_UPLOAD_SUCCESSFULLY";
 }

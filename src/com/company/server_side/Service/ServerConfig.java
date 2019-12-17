@@ -4,7 +4,7 @@ package com.company.server_side.Service;
 public final class ServerConfig {
 
   public static final int SERVER_PORT_NUMBER = 2022;
-  public static final int MAX_NUMBER_CLIENTS = 10;
+  public static final int MAX_NUMBER_CLIENTS = 100;
 
 
   private ServerConfig() {

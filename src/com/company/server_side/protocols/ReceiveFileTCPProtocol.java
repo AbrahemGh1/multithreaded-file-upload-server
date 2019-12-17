@@ -29,7 +29,7 @@ public class ReceiveFileTCPProtocol extends ReceiveFileProtocol {
   }
 
   @Override
-  public boolean checkIfFileNameExist(Path path, String fileName) {
+  public synchronized boolean checkIfFileNameExist(Path path, String fileName) {
     return new File(path + File.separator + "ServerFilesToTest" + File.separator + fileName)
         .exists();
   }

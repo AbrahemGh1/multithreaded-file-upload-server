@@ -1,7 +1,9 @@
 package com.company.Client;
 
-import com.company.commonsUtility.Messenger;
-import com.company.commonsUtility.MessengerConstant;
+
+
+import com.company.commonsUtility.BufferMessenger;
+import static  com.company.commonsUtility.MessengerConstant.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,15 +16,15 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 
 class ClientTest extends Thread {
 
   private static Integer portNumber = 2022;
-  public static volatile int numberOfClient = 0;
-  private final Messenger serverMessenger;
+  public static volatile int clientID = 0;
+  private final BufferMessenger serverMessenger;
   private final Path directoryPath = Paths
       .get(System.getProperty("user.dir") + File.separator + "ClientFilesToTest");
   private final CountDownLatch startLatch;
@@ -32,11 +34,10 @@ class ClientTest extends Thread {
 
   public ClientTest(CountDownLatch startLatch) throws IOException {
     SocketChannel socketChannel;
-      System.out.println();
       socketChannel = SocketChannel
           .open(new InetSocketAddress("localhost", portNumber));
-    this.serverMessenger = new Messenger(socketChannel);
-    filesPath = getFilesNamesInDirectory();
+    this.serverMessenger = new BufferMessenger(socketChannel);
+    filesPath = getFilesPathsInDirectory();
 
     this.startLatch = startLatch;
     startLatch.countDown();
@@ -45,62 +46,60 @@ class ClientTest extends Thread {
   @Override
   public void run() {
     try {
-     startLatch.await();// wait all threads to be in same point to start at same time
+      startLatch.await();// wait all threads to be in same point to start at same time
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-      this.startUploadFiles();
-    System.out.println("numberOfClient: "+numberOfClient--);
+    this.startUploadFiles();
     serverMessenger.close();
-    this.toString();
-    if(numberOfClient==0)
+    System.out.println(this.toString());
+    clientID--;
+    if(clientID==0)
       System.exit(0);
   }
 
-  private ArrayList getFilesNamesInDirectory() {
+  private ArrayList getFilesPathsInDirectory() {
     List<String> filesNamesInDirectory = null;
     try (Stream<Path> walk = Files.walk(directoryPath)) {
       filesNamesInDirectory = walk.filter(Files::isRegularFile)
           .map(Path::toString).filter(f -> f.endsWith(".txt")).collect(Collectors.toList());
-
-      filesNamesInDirectory.forEach(System.out::println);
-
     } catch (IOException e) {
       e.printStackTrace();
     }
     return (ArrayList) filesNamesInDirectory;
   }
 
-  public void startUploadFiles() {
+  public  void startUploadFiles() {
     while (!filesPath.isEmpty()) {
+      int numberOfFiles=filesPath.size();
       if (uploadFile()) {
-        numberOfFilesUploadedByClient++;
+        numberOfFilesUploadedByClient+=(numberOfFiles-filesPath.size());
       }
       filesPath.remove(filesPath.size() - 1);
     }
     this.toString();
-    serverMessenger.writeMessage(MessengerConstant.REQUEST_NORMAL_CLOSE);
+    serverMessenger.writeMessage(REQUEST_NORMAL_CLOSE);
     requestNormalCloseHandler();
   }
 
   private boolean uploadFile() {
-    serverMessenger.writeMessage(MessengerConstant.START_UPLOAD_FILE);
+    serverMessenger.writeMessage(START_UPLOAD_FILE);
     String response = serverMessenger.readMessage();
-    while (!response.equals(MessengerConstant.UPLOAD_FILE_FINISH)) {
+    while (!response.equals(UPLOAD_FILE_FINISH)) {
       switch (response) {
-        case MessengerConstant.REQUEST_FILE_NAME:
+        case REQUEST_FILE_NAME:
           requestFileNameHandler();
           break;
-        case MessengerConstant.REQUEST_FILE_SIZE:
+        case REQUEST_FILE_SIZE:
           requestFileSizeHandler();
           break;
-        case MessengerConstant.REQUEST_FILE_CONTENT:
+        case REQUEST_FILE_CONTENT:
           requestFileContentHandler();
           break;
-        case MessengerConstant.FILE_EXIST_ON_SERVER:
+        case FILE_EXIST_ON_SERVER:
           requestFileExistOnServerHandler();
           return false;
-        case MessengerConstant.REQUEST_NORMAL_CLOSE:
+        case REQUEST_NORMAL_CLOSE:
           requestNormalCloseHandler();
           break;
       }
@@ -112,13 +111,13 @@ class ClientTest extends Thread {
 
   private void requestFileNameHandler() {
     String fileName = (String) filesPath.get(filesPath.size() - 1);
-    System.out.println(Paths.get(fileName).getFileName().toFile());
+   // System.out.println(Paths.get(fileName).getFileName().toFile());
     serverMessenger.writeMessage(String.valueOf(Paths.get(fileName).getFileName().toFile()));
   }
 
   private void requestFileExistOnServerHandler() {
     System.out.println(
-       Paths.get(filesPath.get(filesPath.size() - 1).toString()).toFile().getName()  + ": " + MessengerConstant.FILE_EXIST_ON_SERVER);
+       Paths.get(filesPath.get(filesPath.size() - 1).toString()).toFile().getName()  + ": " + FILE_EXIST_ON_SERVER);
   }
 
   private void requestFileSizeHandler() {
@@ -137,7 +136,8 @@ class ClientTest extends Thread {
       File f = new File(fillPath);
       FileInputStream fileInputStream = new FileInputStream(f);
       FileChannel fc = fileInputStream.getChannel();
-      System.out.println(fc.transferTo(0, fc.size(), socketChannel));
+      fc.transferTo(0, fc.size(), socketChannel);
+      //System.out.println(fc.transferTo(0, fc.size(), socketChannel));
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -150,8 +150,6 @@ class ClientTest extends Thread {
 
   @Override
   public String toString() {
-    return "ClientTest{" +"ClientTest.numberOfClient="+ClientTest.numberOfClient+
-        "numberOfFilesUploadedByClient=" + numberOfFilesUploadedByClient +
-        '}';
+    return "ClientTest{"+"numberOfFilesUploadedByClient"+clientID+": "+numberOfFilesUploadedByClient  +'}';
   }
 }

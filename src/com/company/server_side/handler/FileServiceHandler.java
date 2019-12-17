@@ -9,7 +9,6 @@ public abstract class FileServiceHandler implements ServiceHandler {
   private final ExecutorService executor;
 
   public FileServiceHandler(int numberOfClient) {
-
     executor = Executors.newFixedThreadPool(numberOfClient);
   }
 

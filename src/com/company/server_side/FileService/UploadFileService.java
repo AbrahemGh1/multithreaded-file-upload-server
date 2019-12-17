@@ -15,6 +15,7 @@ public class UploadFileService implements FileService {
     fileServiceListener = uploadFileServiceFactory
         .createFileServiceListener(SERVER_PORT_NUMBER);
     fileServiceListenerThread = new Thread(fileServiceListener);
+    fileServiceListener.run();
   }
 
   @Override
