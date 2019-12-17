@@ -1,9 +1,9 @@
 package com.company.server_side.FileService;
 
 
-import static com.company.server_side.ServerConfig.SERVER_PORT_NUMBER;
+import static com.company.server_side.Service.ServerConfig.SERVER_PORT_NUMBER;
 
-import com.company.server_side.any.ServiceStatus;
+import com.company.server_side.Service.ServiceStatus;
 
 public class UploadFileService implements FileService {
 

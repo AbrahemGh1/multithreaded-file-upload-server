@@ -2,7 +2,7 @@ package com.company.server_side;
 
 import com.company.server_side.FileService.StanderUploadFileService;
 import com.company.server_side.FileService.UploadFileService;
-import com.company.server_side.any.Service;
+import com.company.server_side.Service.Service;
 import java.io.IOException;
 
 public class Main{

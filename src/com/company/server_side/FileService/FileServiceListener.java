@@ -1,6 +1,6 @@
 package com.company.server_side.FileService;
 
-import com.company.server_side.any.ServiceStatus;
+import com.company.server_side.Service.ServiceStatus;
 
 public interface FileServiceListener extends ChangeableStatus {
 

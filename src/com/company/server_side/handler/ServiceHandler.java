@@ -1,4 +1,4 @@
-package com.company.server_side;
+package com.company.server_side.handler;
 
 public interface ServiceHandler {
 

@@ -39,17 +39,18 @@ class ClientTest extends Thread {
     filesPath = getFilesNamesInDirectory();
 
     this.startLatch = startLatch;
+    startLatch.countDown();
   }
 
   @Override
   public void run() {
-    try {
-      startLatch.await();// wait all threads to be in same point to start at same time
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+//    try {
+//      startLatch.await();// wait all threads to be in same point to start at same time
+//    } catch (InterruptedException e) {
+//      e.printStackTrace();
+//    }
       this.startUploadFiles();
-    System.out.println(numberOfClient--);
+    System.out.println("numberOfClient: "+numberOfClient--);
     serverMessenger.close();
     this.toString();
     if(numberOfClient==0)

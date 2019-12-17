@@ -1,4 +1,4 @@
-package com.company.server_side.any;
+package com.company.server_side.Service;
 
 /**
  * <p>interface {@code Service} provide a basic operation can be done

@@ -1,7 +1,9 @@
 package com.company.server_side.FileService;
 
-import com.company.server_side.t.*;
-import com.company.server_side.any.ServiceStatus;
+import com.company.server_side.handler.*;
+import com.company.server_side.Service.ServiceStatus;
+import com.company.server_side.schedule.FileServiceScheduler;
+import com.company.server_side.schedule.StanderUploadFileServiceScheduler;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.ServerSocketChannel;
@@ -14,8 +16,9 @@ public class StanderFileServiceListener implements FileServiceListener {
 
   private volatile ServiceStatus fileServiceListenerStatus = ServiceStatus.SERVICE_UP;
   private ServerSocketChannel serviceSocket;
+  private StanderUploadFileServiceScheduler scheduler = new StanderUploadFileServiceScheduler();
 
-  StanderFileServiceListener(int portNumber) {
+  protected StanderFileServiceListener(int portNumber) {
     try {
       serviceSocket = ServerSocketChannel.open();
       serviceSocket.bind(new InetSocketAddress("localhost", portNumber));//change
@@ -30,8 +33,8 @@ public class StanderFileServiceListener implements FileServiceListener {
     System.out.println("Waiting for Connection from client:");
     while (fileServiceListenerStatus == ServiceStatus.SERVICE_UP) {
       try {
-        handleRequest(serviceSocket.accept());
         System.out.println("Connection Accepted from client.");
+        handleRequest(serviceSocket.accept());
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -45,10 +48,12 @@ public class StanderFileServiceListener implements FileServiceListener {
    *                     <p/>
    * @throws IOException if any I/O Exception happen during communication
    */
-  private synchronized void handleRequest(SocketChannel clientSocket) throws IOException {
+  private void handleRequest(SocketChannel clientSocket) throws IOException {
     Objects.requireNonNull(clientSocket, "SocketChannel cant be null.");
-    UploaderFileServiceHandler service = new UploaderFileServiceHandler(new StanderUploaderFileServiceHandler(clientSocket));
-    service.schedule((service));
+    UploaderFileServiceHandler service = new UploaderFileServiceHandler(new StanderUploaderFileServiceHandler(clientSocket)); //abstract factory pattern
+
+    //service.schedule((service));
+    scheduler.schedule(service);
   }
 
   @Override
