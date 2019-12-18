@@ -5,7 +5,6 @@ import com.company.server_side.handler.ServiceHandler;
 /**
  * <@code>FileServiceScheduler</@code> the root of all Scheduler object.
  */
-
 public interface FileServiceScheduler {
 
   /**
@@ -13,6 +12,5 @@ public interface FileServiceScheduler {
    *
    * @param handler the Object to be add to
    */
-
   void schedule(ServiceHandler handler);
 }

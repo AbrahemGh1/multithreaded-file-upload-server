@@ -1,15 +1,14 @@
 
-”"squid:ClassVariableVisibilityCheck"ZMake numberOfClient a static final constant or non-public and provide accessors if needed.(Ò¦ú¬üÿÿÿÿ8—ÉÌéğ-
-@squid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-wsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ª½Ÿüÿÿÿÿ
+‰"squid:ClassVariableVisibilityCheck"TMake clientID a static final constant or non-public and provide accessors if needed.(†ª¿8Ê­¬™ñ-
+?squid:S1148"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+dsquid:S21422"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€8â¨Ëœñ-
+_squid:S30788"AUse an "AtomicInteger" for this field; its operations are atomic.(‹É¦8ÒŒª™ñ-
+Lsquid:S1444".Make this "public static clientID" field final(†ª¿8Ê­¬™ñ-
+Fsquid:S11483"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ8â¨Ëœñ-
 U"squid:SwitchLastCaseIsDefaultCheckY""Add a default case to this switch.(§Í‡­ùÿÿÿÿ
-Wsquid:S1444"4Make this "public static numberOfClient" field final(Ò¦ú¬üÿÿÿÿ8—ÉÌéğ-
-@squid:S1148€"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-]squid:S21420"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€
-?squid:S1148D"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-?squid:S11481"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
-vsquid:UselessImportCheck"FRemove this unused import 'java.util.concurrent.atomic.AtomicInteger'.(¿êäœøÿÿÿÿ8¦ñ—êğ-
-jsquid:S2095‰"MUse try-with-resources or close this "FileInputStream" in a "finally" clause.(†Â¸ıÿÿÿÿ
-Msquid:S26964"6Make the enclosing method "static" or remove this set.(Ø•ı
-Vsquid:S3725>":Replace this with a call to the "toFile().isFile()" method(±¦ƒÚıÿÿÿÿ
-Xsquid:S30784"AUse an "AtomicInteger" for this field; its operations are atomic.(Ø•ı
+Vsquid:S3725@":Replace this with a call to the "toFile().isFile()" method(±¦ƒÚıÿÿÿÿ
+@squid:S1148Œ"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+jsquid:S2095ˆ"MUse try-with-resources or close this "FileInputStream" in a "finally" clause.(†Â¸ıÿÿÿÿ
+Tsquid:S26968"6Make the enclosing method "static" or remove this set.(‹É¦8ÒŒª™ñ-
+wsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ª½Ÿüÿÿÿÿ
+?squid:S1148C"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ

@@ -9,8 +9,9 @@ public interface FileServiceListener extends ChangeableStatus {
 
   /**
    * Returns the Status at the Service.
-   * <p>Return <@code>STATUS_UP</@code> if the service running otherwise  return
-   * <@code>STATUS_DOWN </@code> </p>
+   *
+   * <p>Return <@code>STATUS_UP</@code> if the service running otherwise return <@code>STATUS_DOWN
+   * </@code>
    *
    * @throws NullPointerException {@inheritDoc}
    */

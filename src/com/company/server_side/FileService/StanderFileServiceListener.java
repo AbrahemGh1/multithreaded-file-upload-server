@@ -13,17 +13,18 @@ import java.nio.channels.SocketChannel;
 import java.util.Arrays;
 import java.util.Objects;
 
-
 public class StanderFileServiceListener implements FileServiceListener {
 
   private volatile ServiceStatus fileServiceListenerStatus = ServiceStatus.SERVICE_UP;
   private ServerSocketChannel serviceSocket;
-  private FileServiceScheduler standerUploadFileServiceScheduler = new StanderUploadFileServiceScheduler();
+  private FileServiceScheduler standerUploadFileServiceScheduler =
+      new StanderUploadFileServiceScheduler();
 
   protected StanderFileServiceListener(int portNumber) {
+
     try {
       serviceSocket = ServerSocketChannel.open();
-      serviceSocket.bind(new InetSocketAddress("localhost", portNumber));//change
+      serviceSocket.bind(new InetSocketAddress("localhost", portNumber));
     } catch (IOException e) {
       System.err.println(Arrays.toString(e.getStackTrace()));
     }
@@ -43,17 +44,17 @@ public class StanderFileServiceListener implements FileServiceListener {
   }
 
   /**
-   * <p>handle client request by create UploaderFileServiceHandler
-   * and add it to schedule wait to be start execute
-   * <p/>
+   * handle client request by create UploaderFileServiceHandler and add it to schedule wait to be
+   * start execute.
    *
    * @param clientSocket to be handle.
    * @throws IOException if any I/O Exception happen during communication
    */
   private void handleRequest(SocketChannel clientSocket) throws IOException {
     Objects.requireNonNull(clientSocket, "SocketChannel cant be null.");
-    ServiceHandler h = new UploaderFileServiceHandler(
-        new StanderUploaderFileServiceHandler(clientSocket)); //abstract factory pattern
+    ServiceHandler h =
+        new UploaderFileServiceHandler(
+            new StanderUploaderFileServiceHandler(clientSocket)); // abstract factory pattern
 
     standerUploadFileServiceScheduler.schedule(h);
   }

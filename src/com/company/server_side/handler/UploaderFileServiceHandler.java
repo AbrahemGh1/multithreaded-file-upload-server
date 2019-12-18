@@ -1,6 +1,5 @@
 package com.company.server_side.handler;
 
-
 import static com.company.server_side.Service.ServerConfig.MAX_NUMBER_CLIENTS;
 
 import com.company.server_side.protocols.ReceiveFileProtocol;
@@ -10,13 +9,13 @@ import java.net.Socket;
 import java.util.Arrays;
 import java.util.Objects;
 
-
 public class UploaderFileServiceHandler extends FileServiceHandler {
 
   private final ReceiveFileProtocol receiveFileProtocol;
-  public UploaderFileServiceHandler(FileServiceHandlerFactory s){
+
+  public UploaderFileServiceHandler(FileServiceHandlerFactory s) {
     super(MAX_NUMBER_CLIENTS);
-    receiveFileProtocol=s.createFileProtocol();
+    receiveFileProtocol = s.createFileProtocol();
   }
 
   public static void closeConnection(@NotNull Socket socket) {

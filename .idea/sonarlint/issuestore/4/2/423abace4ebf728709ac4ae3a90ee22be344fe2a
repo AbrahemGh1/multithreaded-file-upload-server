@@ -1,5 +1,8 @@
 
+esquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(ÚöË‰
+Xsquid:S3725$":Replace this with a call to the "toFile().exists()" method(Â™¹ß8§‹ñ™ñ-
+´%squid:RedundantThrowsDeclarationCheck"wRemove the declaration of thrown exception 'java.lang.InterruptedException', as it cannot be thrown from method's body.(àÒşüøÿÿÿÿ8ÄÌò™ñ-
+lsquid:S1192 "IDefine a constant instead of duplicating this literal "user.dir" 4 times.(¯€ˆ‹üÿÿÿÿ8§‹ñ™ñ-
 wsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ª½Ÿüÿÿÿÿ
-´%squid:RedundantThrowsDeclarationCheck
-"wRemove the declaration of thrown exception 'java.lang.InterruptedException', as it cannot be thrown from method's body.(àÒşüøÿÿÿÿ8ÒƒÜêğ-
-esquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(ÚöË‰
+qsquid:S2095*"NUse try-with-resources or close this "DataOutputStream" in a "finally" clause.(È‚íÂıÿÿÿÿ8§‹ñ™ñ-
+psquid:S00117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßçñ8§‹ñ™ñ-

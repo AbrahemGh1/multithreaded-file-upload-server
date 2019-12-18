@@ -10,18 +10,14 @@ import java.util.Objects;
  * @author Ibrahim Gharayiba
  * @see UploadFileServiceScheduler
  */
-
-
 public class StanderUploadFileServiceScheduler extends UploadFileServiceScheduler {
 
   /**
    * Add handler object that implement <@code>ServiceHandler</code> to schedule by invoking submit
    * method.
    *
-   * <p>
-   * In other word any handler wish to start executed in separated thread  need to implement
+   * <p>In other word any handler wish to start executed in separated thread need to implement
    * <@code>ServiceHandler</code> and register the object to scheduler by invoking schedule method.
-   * </p>
    *
    * @param handler the Object to be added to schedule.
    * @throws NullPointerException if the specified handler is null.

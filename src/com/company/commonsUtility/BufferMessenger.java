@@ -11,11 +11,10 @@ import org.jetbrains.annotations.NotNull;
  * BufferMessenger class implement <@code>Messenger</code> and use <@code>ByteBuffer</code> to read
  * write message on <@code>SocketChannel</code>.
  */
-
 public class BufferMessenger implements Messenger {
 
   private final SocketChannel CLIENT_SOCKET;
-
+  private volatile boolean isOpen = true;
 
   public BufferMessenger(SocketChannel socketChannel) {
 
@@ -28,7 +27,6 @@ public class BufferMessenger implements Messenger {
    * @param message to be written on messenger.
    * @throws NullPointerException if message null.
    */
-
   @Override
   public synchronized void writeMessage(@NotNull String message) {
     Objects.requireNonNull(message, "message cant be null");
@@ -36,7 +34,7 @@ public class BufferMessenger implements Messenger {
       try {
         CLIENT_SOCKET.write(ByteBuffer.wrap(message.getBytes()));
       } catch (IOException e) {
-        e.printStackTrace();
+
       }
     }
   }
@@ -54,13 +52,12 @@ public class BufferMessenger implements Messenger {
       CLIENT_SOCKET.read(byteBuffer);
       message = new String(byteBuffer.array(), StandardCharsets.UTF_8);
     } catch (IOException e) {
-      System.out.println(MessengerConstant.ERROR_CLOSE);
-    }
-    if (message.trim().equals("")) {
-      System.out.println("Nothing");
-      return "Nothing";
+      if (!isOpen) {
+        System.out.println(MessengerConstant.ERROR_CLOSE);
+      }
     }
     if (doesClientRequestsToClose(message)) {
+      isOpen = true;
       this.close();
     }
     return message.trim();

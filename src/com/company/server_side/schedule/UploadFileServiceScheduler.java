@@ -1,5 +1,5 @@
 package com.company.server_side.schedule;
-//Marker interfaces
+// Marker interfaces
 
 import static com.company.server_side.Service.ServerConfig.MAX_NUMBER_CLIENTS;
 
@@ -12,11 +12,9 @@ import java.util.concurrent.Executors;
  *
  * <p>In other word every subclasses implement <@code>Handler<code/> and  attend to handle
  * any <@code>FileService</code> need to implement <@code>UploadFileServiceScheduler</code>.
- * </p>
  *
  * @author Ibrahim Gharayiba
  */
-
 abstract class UploadFileServiceScheduler implements FileServiceScheduler {
 
   static final ExecutorService executor = Executors.newFixedThreadPool(MAX_NUMBER_CLIENTS);

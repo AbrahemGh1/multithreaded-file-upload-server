@@ -18,12 +18,11 @@ package com.company.server_side.FileService;
  * @see java.util.concurrent.Callable
  * @see java.lang.Runnable
  */
-
 public interface ChangeableStatus extends Runnable {
 
   /**
-   * Stop the service from running by attempt to calling setStatus(SERVICE_DOWN) method for
-   * <code>this</code> object
+   * Stop the service from running by attempt to calling setStatus(SERVICE_DOWN) method for <code>
+   * this</code> object
    */
   void stop();
 }

@@ -1,6 +1,5 @@
 package com.company.server_side.protocols;
 
-
 import com.company.commonsUtility.MessengerConstant;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -10,7 +9,6 @@ import java.nio.channels.SocketChannel;
 import java.nio.file.Path;
 
 public class ReceiveFileTCPProtocol extends ReceiveFileProtocol {
-
 
   public ReceiveFileTCPProtocol(SocketChannel clientSocket) {
     super(clientSocket);
@@ -29,26 +27,14 @@ public class ReceiveFileTCPProtocol extends ReceiveFileProtocol {
   }
 
   @Override
-  public synchronized boolean checkIfFileNameExist(Path path, String fileName) {
-    return new File(path + File.separator + "ServerFilesToTest" + File.separator + fileName)
-        .exists();
-  }
-
-  @Override
   public void receiveFileContent(Path path, String fileName, int fileSize) {
     MESSENGER.writeMessage(MessengerConstant.REQUEST_FILE_CONTENT);
     SocketChannel clientSocket = MESSENGER.getClientSocket();
-    String filePath = path.toString() + File.separator
-        + "ServerFilesToTest"
-        + File.separator
-        + fileName;
+    String filePath = path.toString() + File.separator + fileName;
     try (FileChannel fc = new FileOutputStream(filePath).getChannel()) {
-      System.out.println(fc.transferFrom(clientSocket, 0, fileSize));
-      System.out.println("File size: " + fc.size());
+      fc.transferFrom(clientSocket, 0, fileSize);
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
-
-
 }
